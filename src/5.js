@@ -9,13 +9,12 @@ async function addNewUser() {
   const connection = mysql.createConnection(dbconfig);
   await connection.connectAsync();
 
-  // INSECURE :: HACABLE :: SQL INJECTION
-  let sql = `insert into edac.user (username, password, email, mobile) 
-                        values 
-                        ('saurav', '@#@#@#', 'saurav@gmail.com', '23232232' )`;
-  await connection.queryAsync(sql);
+  // SQL INJECTION PROOF :: NOT HACKABLE.
+  const sql = `insert into edac.user (username, password, email, mobile) values (?, ?, ?, ?)`;
+  const params = ["akash", "@@#@#@#", "aksh@gmail.com", "2323232"];
+  await connection.queryAsync(sql, params);
 
-  console.log("User added success!!");
+  console.log("RECORD ADDED");
 
   connection.endAsync();
 }
