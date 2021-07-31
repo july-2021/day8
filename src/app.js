@@ -27,4 +27,16 @@ app.post("/user-create", async (req, res) => {
   res.json({ message: "User created Successfully" });
 });
 
+app.get("/user-list", async (req, res) => {
+  const connection = mysql.createConnection(dbconfig);
+  await connection.connectAsync();
+
+  const sql = `SELECT * from edac.user`;
+  const list = await connection.queryAsync(sql);
+
+  await connection.endAsync();
+
+  res.json(list);
+});
+
 app.listen(4000, () => console.log("server starteddd...."));
