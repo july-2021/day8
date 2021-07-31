@@ -1,8 +1,22 @@
+const mysql = require("mysql");
+const Promise = require("bluebird");
+Promise.promisifyAll(require("mysql/lib/Connection").prototype);
+Promise.promisifyAll(require("mysql/lib/Pool").prototype);
+
 const express = require("express");
 const app = express();
 
-app.get("/user-list", (req, res) => {
-  let list = [];
+const dbconfig = { host: "localhost", user: "root", password: "mysql" };
+
+app.get("/user-list", async (req, res) => {
+  const connection = mysql.createConnection(dbconfig);
+  await connection.connectAsync();
+
+  const sql = `SELECT * from edac.user`;
+  const list = await connection.queryAsync(sql);
+
+  await connection.endAsync();
+
   res.json(list);
 });
 
