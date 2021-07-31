@@ -6,6 +6,10 @@ Promise.promisifyAll(require("mysql/lib/Pool").prototype);
 const express = require("express");
 const app = express();
 
+// MIDDLEWARE ::  TO READ THE DATA SEND BY POST API
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const dbconfig = { host: "localhost", user: "root", password: "mysql" };
 
 app.post("/user-create", async (req, res) => {
