@@ -16,8 +16,9 @@ app.post("/user-create", async (req, res) => {
   const connection = mysql.createConnection(dbconfig);
   await connection.connectAsync();
 
+  const { username, password, email, mobile } = req.body;
   const sql = `insert into edac.user (username, password, email, mobile) values (?, ?, ?, ?)`;
-  const params = ["aditya", "#@#@##", "aditya@gmail.com", "2323232"];
+  const params = [username, password, email, mobile];
 
   await connection.queryAsync(sql, params);
 
