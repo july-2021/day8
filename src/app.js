@@ -10,7 +10,7 @@ const app = express();
 // MIDDLEWARE ::  TO READ THE DATA SEND BY POST API
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors()); // ALLOWING ALL. || We can configure. THE IP ADDERESS, DOMAIN
 
 const dbconfig = { host: "localhost", user: "root", password: "mysql" };
 
