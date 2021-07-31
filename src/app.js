@@ -21,12 +21,29 @@ app.get("/user-list", async (req, res) => {
 });
 
 // http://localhost:4000/user-by-id
+// http://localhost:4000/user-by-id?id=1
 app.get("/user-by-id", async (req, res) => {
   const connection = mysql.createConnection(dbconfig);
   await connection.connectAsync();
 
+  const id = req.query.id;
   let sql = `select * from edac.user where id=?`;
-  let params = [2];
+  let params = [id];
+
+  let list = await connection.queryAsync(sql, params);
+  await connection.endAsync();
+
+  res.json(list);
+});
+
+// http://localhost:4000/user-by-email?email=
+app.get("/user-by-email", async (req, res) => {
+  const connection = mysql.createConnection(dbconfig);
+  await connection.connectAsync();
+
+  const email = req.query.email;
+  let sql = `select * from edac.user where email=?`;
+  let params = [email];
 
   let list = await connection.queryAsync(sql, params);
   await connection.endAsync();
