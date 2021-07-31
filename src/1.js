@@ -1,1 +1,4 @@
-console.log("Hello World");
+// import fs from "fs";
+const fs = require("fs");
+
+console.log(fs);
