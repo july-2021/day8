@@ -20,4 +20,18 @@ app.get("/user-list", async (req, res) => {
   res.json(list);
 });
 
+// http://localhost:4000/user-by-id
+app.get("/user-by-id", async (req, res) => {
+  const connection = mysql.createConnection(dbconfig);
+  await connection.connectAsync();
+
+  let sql = `select * from edac.user where id=?`;
+  let params = [2];
+
+  let list = await connection.queryAsync(sql, params);
+  await connection.endAsync();
+
+  res.json(list);
+});
+
 app.listen(4000, () => console.log("server starteddd...."));
