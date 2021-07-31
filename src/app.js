@@ -3,12 +3,14 @@ const Promise = require("bluebird");
 Promise.promisifyAll(require("mysql/lib/Connection").prototype);
 Promise.promisifyAll(require("mysql/lib/Pool").prototype);
 
+const cors = require("cors");
 const express = require("express");
 const app = express();
 
 // MIDDLEWARE ::  TO READ THE DATA SEND BY POST API
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 const dbconfig = { host: "localhost", user: "root", password: "mysql" };
 
